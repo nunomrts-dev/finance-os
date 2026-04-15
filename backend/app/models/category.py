@@ -15,4 +15,4 @@ class Category(Base):
     is_default = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     transactions = relationship("Transaction", back_populates="category")
-    budgets = relationship("Budget", back_populates="user")
+    budgets = relationship("Budget", back_populates="category")

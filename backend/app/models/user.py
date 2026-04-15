@@ -18,5 +18,5 @@ class User(Base):
     transactions = relationship("Transaction", back_populates="user")
     budgets = relationship("Budget", back_populates="user")
     investments = relationship("Investment", back_populates="user")
-    networth_snapshots = relationship("NetworthSnapshot", back_populates="user")
+    networth_snapshots = relationship("NetWorthSnapshot", back_populates="user")
     audit_logs = relationship("AuditLog", back_populates="user")
