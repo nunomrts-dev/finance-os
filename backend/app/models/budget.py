@@ -15,6 +15,5 @@ class Budget(Base):
     end_date = Column(DateTime(timezone=True), nullable=True)
     alert_at_percent = Column(Float, default=80.0)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-
     user = relationship("User", back_populates="budgets")
     category = relationship("Category", back_populates="budgets")
