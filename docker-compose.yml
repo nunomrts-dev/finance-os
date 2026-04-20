@@ -12,16 +12,22 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nuno -d financedb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   backend:
     build: ./backend
     container_name: finance-os-backend
-    environment:
-      DATABASE_URL: postgresql://nuno:localpassword@db:5432/financedb
+    env_file:
+      - ./backend/.env
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - ./backend:/app
 
@@ -29,11 +35,9 @@ services:
     build: ./frontend
     container_name: finance-os-frontend
     ports:
-      - "3000:3000"
+      - "3000:80"
     depends_on:
       - backend
-    volumes:
-      - ./frontend:/app
 
 volumes:
   postgres_data:
